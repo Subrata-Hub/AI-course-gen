@@ -30,9 +30,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
         <ClerkProvider>
-          <ThemeProvider>
-            <main>{children}</main>
-          </ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </ClerkProvider>
       </body>
     </html>
