@@ -124,7 +124,7 @@
   }
 
   .base-medium {
-    @apply text-[18px] font-medium leading-[25.2px];
+    @apply text-[17px] font-medium leading-[24.2px];
   }
 
   .base-semibold {
@@ -132,7 +132,7 @@
   }
 
   .base-bold {
-    @apply text-[18px] font-bold leading-[140%];
+    @apply text-[17px] font-bold leading-[130%];
   }
 
   .paragraph-regular {
