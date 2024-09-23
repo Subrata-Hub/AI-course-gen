@@ -22,15 +22,17 @@ const SelectOption = () => {
     <div className="px-10 md:px-20 lg:px-44">
       <div className="grid grid-cols-2 gap-10">
         <div>
-          <label className="text-sm">Difficulty Label</label>
+          <label className="text-dark400_light800 from-neutral-300 font-inter text-[12.6px] leading-[9px]">
+            Difficulty Label
+          </label>
           <Select
             onValueChange={(value) => handleInputChange("lavel", value)}
             defaultValue={userCourseInput?.lavel}
           >
-            <SelectTrigger className="background-light900_dark300 light-border-2 text-dark300_light700 mt-1 h-[39px] border">
+            <SelectTrigger className="background-light900_dark300 light-border-2 dark:light-border text-dark300_light700 mt-0.5 h-[39px]">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
-            <SelectContent className="text-dark300_light700  rounded border  bg-light-900  dark:border-dark-400 dark:bg-dark-300 ">
+            <SelectContent className="text-dark300_light700  rounded border bg-light-900 dark:border-dark-400 dark:bg-dark-300 ">
               <SelectItem
                 className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400"
                 value="Beginner"
@@ -54,12 +56,14 @@ const SelectOption = () => {
         </div>
 
         <div>
-          <label className="text-sm">Course Duration</label>
+          <label className="text-dark400_light800 font-inter text-[13px] leading-[9px]">
+            Course Duration
+          </label>
           <Select
             onValueChange={(value) => handleInputChange("duration", value)}
             defaultValue={userCourseInput?.duration}
           >
-            <SelectTrigger className="background-light900_dark300 light-border-2 text-dark300_light700 mt-1 h-[39px] border">
+            <SelectTrigger className="background-light900_dark300 light-border-2 text-dark300_light700 dark:light-border mt-1 h-[39px]">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent className="text-dark300_light700  rounded border  bg-light-900  dark:border-dark-400 dark:bg-dark-300 ">
@@ -86,12 +90,14 @@ const SelectOption = () => {
         </div>
 
         <div>
-          <label className="text-sm">Add Video</label>
+          <label className="text-dark400_light800 font-inter text-[13px] leading-[9px]">
+            Add Video
+          </label>
           <Select
             onValueChange={(value) => handleInputChange("displayVideo", value)}
             defaultValue={userCourseInput?.displayVideo}
           >
-            <SelectTrigger className="background-light900_dark300 light-border-2 text-dark300_light700 mt-1 h-[39px] border">
+            <SelectTrigger className="background-light900_dark300 light-border-2 text-dark300_light700 dark:light-border mt-1 h-[39px]">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent className="text-dark300_light700 rounded border bg-light-900  dark:border-dark-400 dark:bg-dark-300 ">
@@ -111,12 +117,14 @@ const SelectOption = () => {
           </Select>
         </div>
         <div>
-          <label className="text-sm">No off chapters</label>
+          <label className="text-dark400_light800 font-inter text-[13px] leading-[9px]">
+            No off chapters
+          </label>
           <Input
             type="number"
             onChange={(e) => handleInputChange("noOfChapter", e.target.value)}
             defaultValue={userCourseInput?.noOfChapter}
-            className="background-light900_dark300 light-border-2 text-dark300_light700 mt-1 h-[38px] border"
+            className="background-light900_dark300 light-border-2 text-dark300_light700 dark:light-border mt-1 h-[38px]"
           />
         </div>
       </div>

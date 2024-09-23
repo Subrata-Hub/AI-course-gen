@@ -21,7 +21,7 @@ const TopicDescription = () => {
         </label>
         <Input
           placeholder={"Topic"}
-          className="background-light900_dark300 light-border-2 text-dark300_light700 mt-1.5 min-h-[56px] border text-lg"
+          className="background-light900_dark300 light-border-2 dark:light-border text-dark300_light700  placeholder mt-1.5  min-h-[56px] text-lg"
           defaultValue={userCourseInput?.topic}
           onChange={(e) => handleInputChange("topic", e.target.value)}
         />
@@ -34,7 +34,7 @@ const TopicDescription = () => {
         <Textarea
           placeholder="About your course"
           defaultValue={userCourseInput?.description}
-          className="background-light900_dark300 light-border-2 text-dark300_light700  mt-1.5 min-h-24  border text-lg"
+          className="background-light900_dark300 light-border-2 text-dark300_light700 placeholder  mt-1.5 min-h-24  border text-lg"
           onChange={(e) => handleInputChange("description", e.target.value)}
         />
       </div>

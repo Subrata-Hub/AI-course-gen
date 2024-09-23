@@ -21,10 +21,18 @@ const SelectCategory = () => {
       <div className="grid grid-cols-3 gap-10 ">
         {categoryList.map((item, index) => (
           <div
-            className={`flex cursor-pointer flex-col items-center rounded-xl border bg-light-900 p-4 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-950 hover:dark:bg-blue-950 ${
-              userCourseInput?.category === item.name &&
-              "border-primary-100 bg-slate-100 dark:bg-blue-950"
-            }`}
+            // className={`flex cursor-pointer flex-col items-center rounded-xl border bg-light-900 p-4 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-950 hover:dark:bg-blue-950 ${
+            //   userCourseInput?.category === item.name &&
+            //   "border-primary-100 bg-slate-100 dark:bg-blue-950"
+            // }`}
+
+            className={`flex cursor-pointer flex-col items-center rounded-xl border p-4 
+              ${
+                userCourseInput?.category === item.name
+                  ? "border-blue-200 bg-slate-100 dark:border-blue-900  dark:bg-blue-950"
+                  : "border bg-light-900 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-950 dark:hover:bg-blue-950"
+              } 
+              transition-all`}
             onClick={() => handleCategoryChange(item.name)}
             key={index}
           >

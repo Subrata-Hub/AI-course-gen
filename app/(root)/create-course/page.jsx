@@ -5,12 +5,18 @@ import TopicDescription from "@/components/create-course/TopicDescription";
 import { Button } from "@/components/ui/button";
 import { StepperOptions } from "@/constants";
 import { useUserInputContext } from "@/context/UserInputProvider";
-import React, { useState } from "react";
+import { generateCourseLayoutAI } from "@/lib/AiModel";
+
+import React, { useEffect, useState } from "react";
 
 const CreateCourse = () => {
   const { userCourseInput } = useUserInputContext();
   const [activeIndex, setActiveIndex] = useState(0);
   // const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    console.log(userCourseInput);
+  }, [userCourseInput]);
 
   const checkStatus = () => {
     if (userCourseInput?.length === 0) {
@@ -41,6 +47,21 @@ const CreateCourse = () => {
     }
     return false;
   };
+
+  const generateCourseLayout = async () => {
+    // setLoading(true);
+    const BASIC_PROMPT =
+      "Generate a Course Tutorial on following Detail with field as Course Name, Description,Duration,noOfChapter,displayVideo Along with Chapter Name, About, Duration: ";
+    const USER_INPUT_PROMPT = `Category: ${userCourseInput?.category}, Topic: ${userCourseInput?.topic}, Level: ${userCourseInput?.lavel}, Duration: ${userCourseInput?.duration}, no Of Chapters: ${userCourseInput?.noOfChapter}, in JSON format`;
+    const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
+    console.log(FINAL_PROMPT);
+    const result = await generateCourseLayoutAI.sendMessage(FINAL_PROMPT);
+    console.log(result?.response.text());
+    console.log(JSON.parse(result?.response.text()));
+    // setLoading(false);
+    // SaveCourseLayoutInDB(JSON.parse(result.response?.text()));
+  };
+
   return (
     <div>
       {/* steper */}
@@ -104,7 +125,7 @@ const CreateCourse = () => {
             <Button
               className="primary-gradient w-fit rounded-[8px] !text-light-900"
               disabled={checkStatus()}
-              // onClick={() => GenerateCourseLayout()}
+              onClick={() => generateCourseLayout()}
             >
               Generate course Layout
             </Button>
