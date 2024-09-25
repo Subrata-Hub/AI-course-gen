@@ -5,7 +5,7 @@ const CoursesSchema = new Schema({
   category: { type: String, required: true },
   label: { type: String, required: true },
   includeVideo: { type: String, required: true, default: "yes" },
-  courseOutput: { type: JSON, required: true },
+  courseOutput: { type: Object, required: true },
   author: { type: Schema.Types.ObjectId, ref: "User" },
   courseBanner: { type: String, default: "/placeholder.png" },
   publish: { type: Boolean, default: false },
