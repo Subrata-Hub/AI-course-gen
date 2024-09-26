@@ -9,12 +9,15 @@ import SelectOption from "../create-course/SelectOption";
 import { Button } from "../ui/button";
 import LoadingDialog from "../create-course/LoadingDialog";
 import { useUserInputContext } from "@/context/UserInputProvider";
+import { useRouter } from "next/navigation";
+// import Courses from "@/database/courses.model";
 
 const CreateCourse = ({ mongoUserId }) => {
   const { userCourseInput } = useUserInputContext();
   const [activeIndex, setActiveIndex] = useState(0);
 
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     console.log(userCourseInput);
@@ -60,19 +63,34 @@ const CreateCourse = ({ mongoUserId }) => {
     const result = await generateCourseLayoutAI.sendMessage(FINAL_PROMPT);
     console.log(result?.response.text());
     console.log(JSON.parse(result?.response.text()));
-    setLoading(false);
+
     saveCourseLayoutInDB(JSON.parse(result.response?.text()));
     // saveCourseLayoutInDB(JSON.parse(JSON.stringify(result?.response.text())));
   };
 
   const saveCourseLayoutInDB = async (courseLayout) => {
-    await createCourses({
-      name: userCourseInput?.topic,
-      label: userCourseInput?.lavel,
-      category: userCourseInput?.category,
-      courseOutput: courseLayout,
-      author: JSON.parse(mongoUserId),
-    });
+    try {
+      const createdCourse = await createCourses({
+        name: userCourseInput?.topic,
+        label: userCourseInput?.lavel,
+        category: userCourseInput?.category,
+        courseOutput: courseLayout,
+        author: JSON.parse(mongoUserId),
+      });
+
+      console.log("Created Course:", createdCourse);
+      setLoading(false);
+      // Check if the course has been created successfully and has an _id
+      if (createdCourse && createdCourse._id) {
+        // Redirect to the new course page using the course _id
+
+        router.push(`/create-course/${createdCourse._id}`);
+      } else {
+        console.error("Failed to get course ID after creation.");
+      }
+    } catch (error) {
+      console.error("Error saving course layout:", error);
+    }
   };
 
   return (
