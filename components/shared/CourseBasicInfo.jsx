@@ -1,10 +1,40 @@
 "use client";
+import { updateCourses } from "@/lib/actions/courses.action";
+import { storage } from "@/lib/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
-import React from "react";
+import { usePathname } from "next/navigation";
+
+import React, { useState } from "react";
 import { HiMiniTag } from "react-icons/hi2";
 
-const CourseBasicInfo = ({ course, edit }) => {
-  // const [selectedFile, setSelectedFile] = useState();
+const CourseBasicInfo = ({ course, courseId }) => {
+  const [selectedFile, setSelectedFile] = useState();
+  const pathName = usePathname();
+
+  const onFileSelected = async (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(URL.createObjectURL(file));
+    const fileName = Date.now() + ".jpg";
+    const storageRef = ref(storage, "ai-course/" + fileName);
+    await uploadBytes(storageRef, file)
+      .then((snapshot) => {
+        console.log("Upload file completed");
+      })
+      .then((resp) => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          console.log(downloadURL);
+
+          await updateCourses({
+            courseId,
+            updatedData: {
+              courseBanner: downloadURL,
+            },
+            path: pathName,
+          });
+        });
+      });
+  };
   return (
     <div className="mt-5 rounded-xl border p-6 shadow-sm dark:border-slate-800">
       <div className="flex  justify-between gap-8">
@@ -22,21 +52,20 @@ const CourseBasicInfo = ({ course, edit }) => {
         <div className="w-5/12">
           <label htmlFor="upload-image">
             <Image
-              src={"/assets/images/placeholder.png"}
+              src={selectedFile || "/assets/images/placeholder.png"}
               width={250}
               height={250}
               className=" w-full cursor-pointer rounded-xl object-cover"
               alt="banner"
             />
           </label>
-          {edit && (
-            <input
-              type="file"
-              id="upload-image"
-              className="opacity-0"
-              //   onChange={onFileSelected}
-            />
-          )}
+
+          <input
+            type="file"
+            id="upload-image"
+            className="opacity-0"
+            onChange={onFileSelected}
+          />
         </div>
       </div>
     </div>

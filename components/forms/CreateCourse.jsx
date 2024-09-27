@@ -84,7 +84,7 @@ const CreateCourse = ({ mongoUserId }) => {
       if (createdCourse && createdCourse._id) {
         // Redirect to the new course page using the course _id
 
-        router.push(`/create-course/${createdCourse._id}`);
+        router.replace(`/create-course/${createdCourse._id}`);
       } else {
         console.error("Failed to get course ID after creation.");
       }
