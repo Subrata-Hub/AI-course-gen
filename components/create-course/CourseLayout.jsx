@@ -12,7 +12,7 @@ const CourseLayout = ({ courses, courseId }) => {
       {/* <LoadingDialog loading={loading} /> */}
       <CourseBasicInfo course={courses} courseId={courseId} />
       <CourseDetail course={courses} />
-      <ChapterList course={courses} />
+      <ChapterList course={courses} courseId={courseId} />
       <Button className="primary-gradient my-4 min-h-[36px] rounded-xl p-4 !text-light-900">
         Generate Course Content
       </Button>

@@ -11,14 +11,14 @@ import Image from "next/image";
 
 const LoadingDialog = ({ loading }) => {
   return (
-    <AlertDialog open={loading} className="border-none">
+    <AlertDialog open={loading}>
       <AlertDialogContent className="bg-light-900  dark:bg-dark-100">
         <AlertDialogHeader>
           <VisuallyHidden>
             <AlertDialogTitle>Title of the Dialog</AlertDialogTitle>
           </VisuallyHidden>
 
-          <div className="flex flex-col items-center bg-light-900   dark:bg-dark-100">
+          <div className="flex flex-col items-center bg-light-900 dark:bg-dark-100">
             <Image
               src={"/assets/images/update.gif"}
               width={150}

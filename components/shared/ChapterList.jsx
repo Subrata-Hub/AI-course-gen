@@ -1,12 +1,13 @@
 import React from "react";
 import { HiOutlineClock } from "react-icons/hi2";
+import EditChapter from "../forms/EditChapter";
 
-const ChapterList = ({ course }) => {
+const ChapterList = ({ course, edit = true, courseId }) => {
   return (
     <div className="mt-3">
       <h2 className="text-xl font-medium">Chapters</h2>
       <div className="mt-2">
-        {course?.courseOutput?.chapters.map((chapter, index) => (
+        {course?.courseOutput?.chapters?.map((chapter, index) => (
           <div
             className="mb-2 flex items-center justify-between rounded-lg border p-5 dark:border-slate-800"
             key={index}
@@ -18,13 +19,14 @@ const ChapterList = ({ course }) => {
               <div>
                 <h2 className="base-semibold text-dark500_light700">
                   {chapter?.chapter_name}
-                  {/* {edit && (
+
+                  {edit && (
                     <EditChapter
                       course={course}
                       index={index}
-                      refreshData={refreshData}
+                      courseId={courseId}
                     />
-                  )} */}
+                  )}
                 </h2>
                 <p className="mt-1 text-[13px] text-gray-500 dark:text-blue-200">
                   {chapter?.about}

@@ -7,8 +7,9 @@ import { usePathname } from "next/navigation";
 
 import React, { useState } from "react";
 import { HiMiniTag } from "react-icons/hi2";
+import EditCourseBasicInfo from "../forms/EditCourseBasicInfo";
 
-const CourseBasicInfo = ({ course, courseId }) => {
+const CourseBasicInfo = ({ course, courseId, edit = true }) => {
   const [selectedFile, setSelectedFile] = useState();
   const pathName = usePathname();
 
@@ -41,6 +42,9 @@ const CourseBasicInfo = ({ course, courseId }) => {
         <div className="w-7/12">
           <h2 className="h1-bold text-3xl text-dark-100 dark:text-light-900">
             {course?.courseOutput?.course_name}
+            {edit && (
+              <EditCourseBasicInfo course={course} courseId={courseId} />
+            )}
           </h2>
           <p className="text-dark500_light500 body-medium mt-3">
             {course?.courseOutput?.description}
