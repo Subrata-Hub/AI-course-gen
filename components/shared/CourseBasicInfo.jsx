@@ -5,13 +5,21 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiMiniTag } from "react-icons/hi2";
 import EditCourseBasicInfo from "../forms/EditCourseBasicInfo";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 const CourseBasicInfo = ({ course, courseId, edit = true }) => {
   const [selectedFile, setSelectedFile] = useState();
   const pathName = usePathname();
+
+  useEffect(() => {
+    if (course) {
+      setSelectedFile(course?.courseBanner);
+    }
+  }, [course]);
 
   const onFileSelected = async (event) => {
     const file = event.target.files[0];
@@ -52,6 +60,13 @@ const CourseBasicInfo = ({ course, courseId, edit = true }) => {
           <h2 className="mt-2 flex items-center gap-2 font-medium text-blue-600">
             <HiMiniTag /> {course?.category}
           </h2>
+          {!edit && (
+            <Link href={`/course/${course?.courseId}/start`}>
+              <Button className="primary-gradient mt-16 min-h-[36px] w-4/5 rounded-xl p-4  !text-light-900">
+                Start
+              </Button>
+            </Link>
+          )}
         </div>
         <div className="w-5/12">
           <label htmlFor="upload-image">

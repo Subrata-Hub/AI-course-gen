@@ -2,7 +2,7 @@ import { model, models, Schema } from "mongoose";
 
 const ChaptersSchema = new Schema({
   courses: { type: Schema.Types.ObjectId, ref: "Courses" },
-  content: { type: JSON, required: true },
+  content: { type: Object, required: true },
   videoId: { type: String, required: true },
 });
 
