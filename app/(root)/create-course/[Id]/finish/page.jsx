@@ -33,12 +33,12 @@ const FinishScreen = ({ params }) => {
       <CourseBasicInfo course={course} edit={false} />
       <h2 className="mt-3">Course URL:</h2>
       <h2 className="flex items-center gap-5 rounded-md border p-2 text-center text-gray-400">
-        {process.env.NEXT_PUBLIC_HOST_NAME}/course/view/{courseId}
+        {process.env.NEXT_PUBLIC_HOST_NAME}/course/{courseId}
         <HiOutlineClipboardDocumentCheck
           className="size-5 cursor-pointer"
           onClick={async () =>
             await navigator.clipboard.writeText(
-              `${process.env.NEXT_PUBLIC_HOST_NAME}/course/view/${courseId}`
+              `${process.env.NEXT_PUBLIC_HOST_NAME}/course/${courseId}`
             )
           }
         />

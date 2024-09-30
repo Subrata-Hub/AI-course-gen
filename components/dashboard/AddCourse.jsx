@@ -11,6 +11,7 @@ const AddCourse = () => {
       <div>
         <h2 className="text-2xl text-dark-100 dark:text-light-900">
           Hellow, <span className="h2-bold">{user?.fullName}</span>
+          {/* Hellow, <span className="h2-bold">{mongoUser?.name}</span> */}
         </h2>
         <p className="text-light400_light500 text-sm">
           Create a new course with AI, share with friend and eren from it{" "}

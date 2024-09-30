@@ -71,7 +71,7 @@ const CourseBasicInfo = ({ course, courseId, edit = true }) => {
         <div className="w-5/12">
           <label htmlFor="upload-image">
             <Image
-              src={selectedFile || "/assets/images/placeholder.png"}
+              src={selectedFile || "/placeholder.png"}
               width={250}
               height={250}
               className=" w-full cursor-pointer rounded-xl object-cover"
