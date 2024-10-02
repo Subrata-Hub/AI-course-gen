@@ -54,7 +54,9 @@ const CourseCard = ({ course, displayUser = false }) => {
               className="rounded-full"
               alt="profileImage"
             />
-            <h2 className="text-sm">{course?.author?.userName}</h2>
+            <h2 className="text-sm">
+              {course?.author?.name || course?.author?.username}
+            </h2>
           </div>
         )}
       </div>

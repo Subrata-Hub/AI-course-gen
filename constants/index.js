@@ -7,6 +7,7 @@ import {
   HiLightBulb,
   HiClipboardDocumentCheck,
 } from "react-icons/hi2";
+import qs from "query-string";
 export const themes = [
   { value: "light", label: "Light", icon: "/assets/icons/sun.svg" },
   { value: "dark", label: "Dark", icon: "/assets/icons/moon.svg" },
@@ -96,3 +97,17 @@ export const StepperOptions = [
     icon: <HiClipboardDocumentCheck />,
   },
 ];
+
+export const formUrlQuery = ({ params, key, value }) => {
+  const currentUrl = qs.parse(params);
+
+  currentUrl[key] = value;
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query: currentUrl,
+    },
+    { skipNull: true }
+  );
+};

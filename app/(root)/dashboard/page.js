@@ -1,26 +1,3 @@
-// import UserCourses from "@/components/courses/UserCourses";
-// import AddCourse from "@/components/dashboard/AddCourse";
-// import { getUserById, getUserCourses } from "@/lib/actions/user.action";
-// import { auth } from "@clerk/nextjs/server";
-
-// import React from "react";
-
-// const Dashboard = async () => {
-//   const { userId } = auth();
-//   const mongoUser = await getUserById({ userId });
-
-//   const userCourses = await getUserCourses({ mongoUser });
-//   console.log(userCourses);
-//   return (
-//     <div>
-//       <AddCourse />
-//       <UserCourses courses={userCourses} />
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
 import UserCourses from "@/components/courses/UserCourses";
 import AddCourse from "@/components/dashboard/AddCourse";
 import { getUserById, getUserCourses } from "@/lib/actions/user.action";
@@ -39,16 +16,12 @@ const Dashboard = async () => {
 
     // Fetch MongoDB user by Clerk userId
     const mongoUser = await getUserById({ userId });
-    console.log(mongoUser);
+    const plainMongoUser = {
+      ...mongoUser,
+      _id: mongoUser._id.toString(),
+    };
 
-    if (!mongoUser) {
-      throw new Error("Mongo user not found");
-    }
-
-    // Fetch user courses
-    const userCourses = await getUserCourses({ mongoUser });
-
-    console.log(userCourses);
+    const userCourses = await getUserCourses({ mongoUser: plainMongoUser._id });
 
     if (!userCourses) {
       throw new Error("No courses found for this user");
