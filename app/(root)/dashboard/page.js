@@ -21,7 +21,9 @@ const Dashboard = async () => {
       _id: mongoUser._id.toString(),
     };
 
-    const userCourses = await getUserCourses({ mongoUser: plainMongoUser._id });
+    const { plainUserCourses: userCourses } = await getUserCourses({
+      mongoUser: plainMongoUser._id,
+    });
 
     if (!userCourses) {
       throw new Error("No courses found for this user");

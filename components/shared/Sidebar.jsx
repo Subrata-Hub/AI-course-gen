@@ -4,7 +4,9 @@ import { dashboardMenu } from "../../constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Sidebar = () => {
+import ProgressBar from "../shared/ProgressBar";
+
+const Sidebar = ({ totalUserCourses }) => {
   const pathName = usePathname();
   return (
     <div className="background-light900_dark200 light-border custom-scrollbar fixed left-0 top-0 flex h-screen flex-col justify-between border-r pl-9 pr-4 pt-32  shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[280px]">
@@ -31,11 +33,16 @@ const Sidebar = () => {
           </Link>
         ))}
       </ul>
-      <div className="absolute bottom-10 w-4/5">
-        {/* <Progress value={(userCourseList.length / 20) * 100} /> */}
-        <div className="primary-gradient h-2"></div>
+      <div className="absolute bottom-5 w-4/5">
+        {/* <Progress value={(totalUserCourses / 20) * 100} /> */}
+        <ProgressBar
+          value={(totalUserCourses / 10) * 100}
+          color="primary-gradient"
+          trackColor="bg-gray-300 dark:bg-gray-700"
+        />
+        {/* <div className="primary-gradient h-2"></div> */}
         <h2 className="text-dark200_light800 my-2 text-sm">
-          10 out of 20 course created
+          {totalUserCourses} out of 10 course created
         </h2>
         <h2 className="text-light400_light500 text-xs">
           Upgrade your plane for unlimeted genation
