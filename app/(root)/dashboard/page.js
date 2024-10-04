@@ -1,5 +1,6 @@
 import UserCourses from "@/components/courses/UserCourses";
 import AddCourse from "@/components/dashboard/AddCourse";
+
 import { getUserById, getUserCourses } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";

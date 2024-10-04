@@ -8,6 +8,7 @@ import ProgressBar from "../shared/ProgressBar";
 
 const Sidebar = ({ totalUserCourses }) => {
   const pathName = usePathname();
+
   return (
     <div className="background-light900_dark200 light-border custom-scrollbar fixed left-0 top-0 flex h-screen flex-col justify-between border-r pl-9 pr-4 pt-32  shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[280px]">
       <ul className="">

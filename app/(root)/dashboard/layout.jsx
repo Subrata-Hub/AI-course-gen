@@ -22,7 +22,6 @@ const DashboardLayout = async ({ children }) => {
     mongoUser: plainMongoUser._id,
   });
 
-  console.log(typeof totalUserCourses);
   return (
     <div>
       <div className="hidden md:block md:w-[270px] lg:w-[280px]">
@@ -30,10 +29,12 @@ const DashboardLayout = async ({ children }) => {
       </div>
       <div className="md:ml-[266px]">
         {/* <Navbar /> */}
-        <div className="pt-14">{children}</div>
+        <div className="pt-10">{children}</div>
       </div>
     </div>
   );
 };
 
 export default DashboardLayout;
+
+// totalUserCourses={totalUserCourses}

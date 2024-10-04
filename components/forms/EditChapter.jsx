@@ -29,32 +29,6 @@ const EditChapter = ({ course, index, courseId }) => {
 
   const pathName = usePathname();
 
-  //   const onUpdateHandler = async () => {
-  //     // Create a copy of the existing chapters array
-  //     const updatedChapters = [...course.courseOutput.chapters];
-
-  //     // Update the specific chapter at the given index
-  //     updatedChapters[index] = {
-  //       ...updatedChapters[index],
-  //       chapter_name: name,
-  //       about: about,
-  //     };
-  //     await updateCourses({
-  //       courseId,
-  //       updatedData: {
-  //         courseOutput: {
-  //           course_name: course?.courseOutput?.course_name,
-  //           description: course?.courseOutput?.description,
-  //           duration: course?.courseOutput?.duration,
-  //           noOfChapters: course?.courseOutput?.noOfChapters,
-  //           displayVideo: course?.courseOutput?.displayVideo,
-  //           chapters: updatedChapters,
-  //         },
-  //       },
-  //       path: pathName,
-  //     });
-  //   };
-
   const onUpdateHandler = async () => {
     try {
       // Create a copy of the existing chapters array

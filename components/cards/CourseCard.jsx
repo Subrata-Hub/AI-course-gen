@@ -1,15 +1,22 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import { HiOutlineBookOpen } from "react-icons/hi2";
-
-// import DropdownOptions from "./DropdownOptions";
+import { HiEllipsisVertical, HiOutlineBookOpen } from "react-icons/hi2";
 
 import Link from "next/link";
 import { Badge } from "../ui/badge";
+import DropdownOptions from "../shared/DropdownOptions";
+import { deleteCouses } from "@/lib/actions/courses.action";
+import { usePathname } from "next/navigation";
 
 const CourseCard = ({ course, displayUser = false }) => {
-  //   const handleOnDelete = async () => {};
+  const pathName = usePathname();
+  const handleOnDelete = async () => {
+    await deleteCouses({
+      courseId: course?._id,
+      path: pathName,
+    });
+  };
   return (
     <div className="mt-4 cursor-pointer rounded-lg border p-2  shadow-sm dark:border-slate-800">
       <Link href={`/course/${course?._id}`}>
@@ -26,11 +33,11 @@ const CourseCard = ({ course, displayUser = false }) => {
           <h2 className="text-dark200_light800 truncate text-[19px] font-semibold">
             {course?.courseOutput?.course_name}
           </h2>
-          {/* {!displayUser && (
+          {!displayUser && (
             <DropdownOptions handleOnDelete={() => handleOnDelete()}>
-              <HiEllipsisVertical className="text-2xl" />
+              <HiEllipsisVertical className="text-dark500_light500 text-2xl" />
             </DropdownOptions>
-          )} */}
+          )}
         </div>
 
         <p className="my-2 text-sm text-gray-400 dark:text-blue-200 ">
