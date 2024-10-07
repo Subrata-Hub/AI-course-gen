@@ -15,9 +15,6 @@ const Sidebar = ({ totalUserCourses }) => {
         {dashboardMenu.map((item) => (
           <Link href={item.path} key={item.id}>
             <div
-              // className={`mb-5 flex cursor-pointer items-center gap-2 rounded-lg p-3 text-gray-600 hover:bg-gray-100 hover:text-black ${
-              //   item.path === pathName && "bg-gray-100 text-black"
-              // }`}
               className={`${
                 item.path === pathName
                   ? "primary-gradient rounded-xl text-light-900"
@@ -35,15 +32,14 @@ const Sidebar = ({ totalUserCourses }) => {
         ))}
       </ul>
       <div className="absolute bottom-5 w-4/5">
-        {/* <Progress value={(totalUserCourses / 20) * 100} /> */}
         <ProgressBar
-          value={(totalUserCourses / 10) * 100}
+          value={(totalUserCourses / 20) * 100}
           color="primary-gradient"
           trackColor="bg-gray-300 dark:bg-gray-700"
         />
         {/* <div className="primary-gradient h-2"></div> */}
         <h2 className="text-dark200_light800 my-2 text-sm">
-          {totalUserCourses} out of 10 course created
+          {totalUserCourses} out of 20 course created
         </h2>
         <h2 className="text-light400_light500 text-xs">
           Upgrade your plane for unlimeted genation
@@ -54,6 +50,3 @@ const Sidebar = ({ totalUserCourses }) => {
 };
 
 export default Sidebar;
-
-// className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]"
-// fixed h-full px-2 pt-10 shadow-light-200  dark:shadow-dark-200 md:w-64

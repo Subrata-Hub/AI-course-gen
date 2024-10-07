@@ -2,13 +2,9 @@ import React from "react";
 
 const Spinner = ({ sized }) => {
   return (
-    <div
-    // className={`fixed left-1/2 ${position} transform -translate-x-1/2 ${
-    //   show ? "visible" : "invisible"
-    // }`}
-    >
+    <div>
       <div
-        className={`animate-spin rounded-full border-x-2 border-t-2 border-solid border-indigo-900 ${sized}`}
+        className={`animate-spin rounded-full border-x-2 border-t-2 border-solid border-green-500 bg-gray-950 ${sized}`}
       ></div>
     </div>
   );

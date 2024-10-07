@@ -61,10 +61,19 @@ const CreateCourse = ({ mongoUserId }) => {
     const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
     console.log(FINAL_PROMPT);
     const result = await generateCourseLayoutAI.sendMessage(FINAL_PROMPT);
-    console.log(result?.response.text());
-    console.log(JSON.parse(result?.response.text()));
+    // console.log(result?.response.text());
+    // console.log(JSON.parse(result?.response.text()));
 
-    saveCourseLayoutInDB(JSON.parse(result.response?.text()));
+    const rawResponse = result.response?.text();
+    console.log("Raw AI Response:", rawResponse);
+    try {
+      const courseLayout = JSON.parse(rawResponse);
+      saveCourseLayoutInDB(courseLayout);
+    } catch (error) {
+      console.error("JSON Parsing Error:", error, rawResponse);
+    }
+
+    // saveCourseLayoutInDB(JSON.parse(result.response?.text()));
     // saveCourseLayoutInDB(JSON.parse(JSON.stringify(result?.response.text())));
   };
 

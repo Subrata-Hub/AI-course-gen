@@ -1,4 +1,5 @@
 /* eslint-disable object-shorthand */
+
 "use client";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
@@ -14,6 +15,7 @@ import { updateCourses } from "@/lib/actions/courses.action";
 const CourseLayout = ({ courses, courseId }) => {
   const [loading, setLoading] = useState(false);
   const [chapterLoadingStatuses, setChapterLoadingStatuses] = useState([]);
+  const [chapterContent, setChapterContent] = useState([]); // State to store generated content
 
   const router = useRouter();
   const pathName = usePathname();
@@ -29,39 +31,67 @@ const CourseLayout = ({ courses, courseId }) => {
     try {
       const chapterPromises = chapters.map(async (chapter, index) => {
         let retryCount = 0;
-        let content = null;
         let videoId = "";
+        let videoFound = false; // Track if a video was found
 
-        // Retry loop for content generation
+        // Retry loop for video search
         while (retryCount < MAX_RETRIES) {
           try {
-            // Generate Video URL
             const videoRes = await getVideos(
               courses?.name + ":" + chapter?.chapter_name
             );
-            videoId = videoRes[0]?.id?.videoId || "";
+            if (videoRes.length > 0) {
+              videoId = videoRes[0]?.id?.videoId || "";
+              videoFound = true;
+              break; // Exit loop if video is found
+            }
+            retryCount++;
+          } catch (videoError) {
+            console.error("Error fetching video", videoError);
+          }
+        }
 
-            // Generate content using AI
-            const PROMPT = `Explain the concept in detail on Topic:${courses?.name}, chapter:${chapter?.chapter_name}, in JSON Format...`;
+        let content;
+
+        // Generate content using video if found
+        if (videoFound) {
+          try {
+            const PROMPT = `Explain the concept in detail on Topic:${
+              courses?.name
+            }, chapter:${chapter?.chapter_name}, in JSON Format with list of array with field as title, explanation on give chapter in detail, Code Example(Code field in <precode> format) if applicable`;
             const result = await generateCapterContentAI.sendMessage(PROMPT);
             const rawContent = await result?.response?.text();
 
             // Parse JSON content
             content = JSON.parse(rawContent);
-
-            // If we successfully get content, break the loop
-            break;
           } catch (jsonError) {
-            retryCount++;
-            if (retryCount === MAX_RETRIES) {
-              console.error(
-                `Error parsing JSON content after ${MAX_RETRIES} retries`,
-                jsonError
-              );
-              chapterStatuses[index] = "error";
-              setChapterLoadingStatuses([...chapterStatuses]);
-              return; // Skip this chapter if retries are exhausted
-            }
+            console.error(
+              `Error parsing JSON content after ${MAX_RETRIES} retries`,
+              jsonError
+            );
+            chapterStatuses[index] = "error";
+            setChapterLoadingStatuses([...chapterStatuses]);
+            return; // Skip this chapter if retries are exhausted
+          }
+        } else {
+          // If video not found, generate content without video
+          try {
+            const PROMPT = `Explain the concept in detail on Topic:${
+              courses?.name
+            }, chapter:${chapter?.chapter_name}, in JSON Format with list of array with field as title, explanation on give chapter in detail`;
+            const result = await generateCapterContentAI.sendMessage(PROMPT);
+            const rawContent = await result?.response?.text();
+
+            // Parse JSON content
+            content = JSON.parse(rawContent);
+          } catch (jsonError) {
+            console.error(
+              `Error parsing JSON content after ${MAX_RETRIES} retries`,
+              jsonError
+            );
+            chapterStatuses[index] = "error";
+            setChapterLoadingStatuses([...chapterStatuses]);
+            return; // Skip this chapter if retries are exhausted
           }
         }
 
@@ -70,7 +100,11 @@ const CourseLayout = ({ courses, courseId }) => {
           courses: courseId,
           content: content,
           videoId: videoId,
+          chapterIndex: index,
         });
+
+        // Update chapter content state for display
+        setChapterContent((prevContent) => [...prevContent, content]);
 
         chapterStatuses[index] = "completed";
         setChapterLoadingStatuses([...chapterStatuses]);
@@ -102,6 +136,7 @@ const CourseLayout = ({ courses, courseId }) => {
         courseId={courseId}
         loading={loading}
         chapterLoadingStatuses={chapterLoadingStatuses}
+        chapterContent={chapterContent} // Pass the chapter content to the ChapterList component
       />
       <Button
         className="primary-gradient my-4 min-h-[36px] rounded-xl p-4 !text-light-900"

@@ -35,10 +35,10 @@ const ChapterList = ({
                     />
                   )}
                 </h2>
-                <p className="mt-1 text-[13px] text-gray-500 dark:text-blue-200">
+                <p className="mr-10 mt-1 text-[13px] text-gray-500 dark:text-blue-200">
                   {chapter?.about}
                 </p>
-                <p className="flex items-center gap-2 text-[13px] text-blue-500 dark:text-purple-700">
+                <p className="mt-1 flex items-center gap-2 text-[13px] text-blue-500 dark:text-purple-700">
                   <HiOutlineClock />
                   {chapter?.duration}
                 </p>
@@ -46,13 +46,13 @@ const ChapterList = ({
             </div>
 
             {chapterLoadingStatuses?.[index] === "loading" && (
-              <Spinner show={true} sized={"size-6"} />
+              <Spinner show={true} sized={"size-7"} />
             )}
             {chapterLoadingStatuses?.[index] === "completed" && (
-              <HiOutlineCheckCircle className="flex-none text-3xl  text-green-600" />
+              <HiOutlineCheckCircle className="flex-none text-[32px]  text-green-600" />
             )}
             {chapterLoadingStatuses?.[index] === "error" && (
-              <HiOutlineCheckCircle className="flex-none text-3xl  text-red-600" />
+              <HiOutlineCheckCircle className="flex-none text-[32px]  text-red-600" />
             )}
           </div>
         ))}

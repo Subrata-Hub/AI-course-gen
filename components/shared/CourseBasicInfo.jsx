@@ -61,7 +61,7 @@ const CourseBasicInfo = ({ course, courseId, edit = true }) => {
             <HiMiniTag /> {course?.category}
           </h2>
           {!edit && (
-            <Link href={`/course/${course?.courseId}/start`}>
+            <Link href={`/course/${course?._id}/start`}>
               <Button className="primary-gradient mt-16 min-h-[36px] w-4/5 rounded-xl p-4  !text-light-900">
                 Start
               </Button>
