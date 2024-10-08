@@ -11,7 +11,7 @@ import EditCourseBasicInfo from "../forms/EditCourseBasicInfo";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-const CourseBasicInfo = ({ course, courseId, edit = true }) => {
+const CourseBasicInfo = ({ course, courseId, edit = true, showEditButton }) => {
   const [selectedFile, setSelectedFile] = useState();
   const pathName = usePathname();
 
@@ -50,7 +50,7 @@ const CourseBasicInfo = ({ course, courseId, edit = true }) => {
         <div className="w-7/12">
           <h2 className="h1-bold text-3xl text-dark-100 dark:text-light-900">
             {course?.courseOutput?.course_name}
-            {edit && (
+            {edit && showEditButton && (
               <EditCourseBasicInfo course={course} courseId={courseId} />
             )}
           </h2>

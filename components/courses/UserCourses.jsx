@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const UserCourses = ({ courses }) => {
   return (
-    <div className="mt-5">
+    <div className="mt-6">
       <h2 className="text-dark200_light800 text-[21px] font-[500]">
         My AI Courses
       </h2>

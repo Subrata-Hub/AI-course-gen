@@ -16,13 +16,21 @@ const CourseLayout = ({ courses, courseId }) => {
   const [loading, setLoading] = useState(false);
   const [chapterLoadingStatuses, setChapterLoadingStatuses] = useState([]);
   const [chapterContent, setChapterContent] = useState([]); // State to store generated content
+  const [showEditButton, setShowEditButton] = useState(true);
 
   const router = useRouter();
   const pathName = usePathname();
 
   const MAX_RETRIES = 3;
 
+  const sanitizeJsonResponse = (response) => {
+    // Replace any unwanted characters, such as trailing commas, unescaped quotes, etc.
+    const cleanedResponse = response.replace(/,(\s*[}\]])/g, "$1"); // Removes trailing commas before closing brackets
+    return cleanedResponse;
+  };
+
   const GenerateChapterContent = async () => {
+    setShowEditButton(false);
     setLoading(true);
     const chapters = courses?.courseOutput?.chapters;
     const chapterStatuses = new Array(chapters.length).fill("loading");
@@ -32,7 +40,7 @@ const CourseLayout = ({ courses, courseId }) => {
       const chapterPromises = chapters.map(async (chapter, index) => {
         let retryCount = 0;
         let videoId = "";
-        let videoFound = false; // Track if a video was found
+        let videoFound = false;
 
         // Retry loop for video search
         while (retryCount < MAX_RETRIES) {
@@ -43,7 +51,7 @@ const CourseLayout = ({ courses, courseId }) => {
             if (videoRes.length > 0) {
               videoId = videoRes[0]?.id?.videoId || "";
               videoFound = true;
-              break; // Exit loop if video is found
+              break;
             }
             retryCount++;
           } catch (videoError) {
@@ -52,46 +60,33 @@ const CourseLayout = ({ courses, courseId }) => {
         }
 
         let content;
+        const PROMPT = videoFound
+          ? `Explain the concept in detail on Topic:${courses?.name}, chapter:${chapter?.chapter_name}, in JSON Format with list of array with field as title, explanation, Code Example (Code field in <precode> format if applicable).`
+          : `Explain the concept in detail on Topic:${courses?.name}, chapter:${chapter?.chapter_name}, in JSON Format with list of array with field as title, explanation.`;
 
-        // Generate content using video if found
-        if (videoFound) {
+        retryCount = 0;
+        while (retryCount < MAX_RETRIES) {
           try {
-            const PROMPT = `Explain the concept in detail on Topic:${
-              courses?.name
-            }, chapter:${chapter?.chapter_name}, in JSON Format with list of array with field as title, explanation on give chapter in detail, Code Example(Code field in <precode> format) if applicable`;
             const result = await generateCapterContentAI.sendMessage(PROMPT);
             const rawContent = await result?.response?.text();
 
-            // Parse JSON content
-            content = JSON.parse(rawContent);
-          } catch (jsonError) {
-            console.error(
-              `Error parsing JSON content after ${MAX_RETRIES} retries`,
-              jsonError
-            );
-            chapterStatuses[index] = "error";
-            setChapterLoadingStatuses([...chapterStatuses]);
-            return; // Skip this chapter if retries are exhausted
-          }
-        } else {
-          // If video not found, generate content without video
-          try {
-            const PROMPT = `Explain the concept in detail on Topic:${
-              courses?.name
-            }, chapter:${chapter?.chapter_name}, in JSON Format with list of array with field as title, explanation on give chapter in detail`;
-            const result = await generateCapterContentAI.sendMessage(PROMPT);
-            const rawContent = await result?.response?.text();
+            // Sanitize and parse the JSON response
+            const cleanedContent = sanitizeJsonResponse(rawContent);
+            content = JSON.parse(cleanedContent);
 
-            // Parse JSON content
-            content = JSON.parse(rawContent);
+            // If successful, break out of the retry loop
+            break;
           } catch (jsonError) {
+            retryCount++;
             console.error(
-              `Error parsing JSON content after ${MAX_RETRIES} retries`,
+              `Error parsing JSON content after ${retryCount} retries`,
               jsonError
             );
-            chapterStatuses[index] = "error";
-            setChapterLoadingStatuses([...chapterStatuses]);
-            return; // Skip this chapter if retries are exhausted
+            if (retryCount === MAX_RETRIES) {
+              chapterStatuses[index] = "error";
+              setChapterLoadingStatuses([...chapterStatuses]);
+              return; // Skip this chapter if retries are exhausted
+            }
           }
         }
 
@@ -105,7 +100,6 @@ const CourseLayout = ({ courses, courseId }) => {
 
         // Update chapter content state for display
         setChapterContent((prevContent) => [...prevContent, content]);
-
         chapterStatuses[index] = "completed";
         setChapterLoadingStatuses([...chapterStatuses]);
       });
@@ -129,7 +123,11 @@ const CourseLayout = ({ courses, courseId }) => {
     <div className="px-7 md:px-20 lg:px-32">
       <h2 className="h1-bold text-center text-blue-500">Course Layout</h2>
 
-      <CourseBasicInfo course={courses} courseId={courseId} />
+      <CourseBasicInfo
+        course={courses}
+        courseId={courseId}
+        showEditButton={showEditButton}
+      />
       <CourseDetail course={courses} />
       <ChapterList
         course={courses}
@@ -137,6 +135,7 @@ const CourseLayout = ({ courses, courseId }) => {
         loading={loading}
         chapterLoadingStatuses={chapterLoadingStatuses}
         chapterContent={chapterContent} // Pass the chapter content to the ChapterList component
+        showEditButton={showEditButton}
       />
       <Button
         className="primary-gradient my-4 min-h-[36px] rounded-xl p-4 !text-light-900"

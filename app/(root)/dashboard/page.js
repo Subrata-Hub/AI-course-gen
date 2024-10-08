@@ -17,13 +17,9 @@ const Dashboard = async () => {
 
     // Fetch MongoDB user by Clerk userId
     const mongoUser = await getUserById({ userId });
-    const plainMongoUser = {
-      ...mongoUser,
-      _id: mongoUser._id.toString(),
-    };
 
     const { plainUserCourses: userCourses } = await getUserCourses({
-      mongoUser: plainMongoUser._id,
+      mongoUser: mongoUser._id,
     });
 
     if (!userCourses) {
@@ -33,7 +29,7 @@ const Dashboard = async () => {
     return (
       <div>
         {/* AddCourse could remain a client-side component */}
-        <AddCourse />
+        <AddCourse user={mongoUser} />
 
         {/* Passing fetched courses to UserCourses */}
         <UserCourses courses={userCourses} />

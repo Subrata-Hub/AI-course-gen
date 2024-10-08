@@ -9,6 +9,7 @@ const ChapterList = ({
   courseId,
   loading,
   chapterLoadingStatuses,
+  showEditButton,
 }) => {
   return (
     <div className="mt-3">
@@ -27,7 +28,7 @@ const ChapterList = ({
                 <h2 className="base-semibold text-dark500_light700">
                   {chapter?.chapter_name}
 
-                  {edit && (
+                  {edit && showEditButton && (
                     <EditChapter
                       course={course}
                       index={index}
@@ -49,7 +50,7 @@ const ChapterList = ({
               <Spinner show={true} sized={"size-7"} />
             )}
             {chapterLoadingStatuses?.[index] === "completed" && (
-              <HiOutlineCheckCircle className="flex-none text-[32px]  text-green-600" />
+              <HiOutlineCheckCircle className="flex-none text-[34px]  text-green-600" />
             )}
             {chapterLoadingStatuses?.[index] === "error" && (
               <HiOutlineCheckCircle className="flex-none text-[32px]  text-red-600" />
