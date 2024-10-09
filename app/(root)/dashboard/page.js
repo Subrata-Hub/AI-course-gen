@@ -5,7 +5,7 @@ import { getUserById, getUserCourses } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
-const Dashboard = async () => {
+const Dashboard = async ({ searchParams }) => {
   try {
     // Fetch user authentication details
     const { userId } = auth();
@@ -18,8 +18,9 @@ const Dashboard = async () => {
     // Fetch MongoDB user by Clerk userId
     const mongoUser = await getUserById({ userId });
 
-    const { plainUserCourses: userCourses } = await getUserCourses({
+    const { plainUserCourses: userCourses, isNext } = await getUserCourses({
       mongoUser: mongoUser._id,
+      page: searchParams?.page ? +searchParams.page : 1,
     });
 
     if (!userCourses) {
@@ -32,7 +33,11 @@ const Dashboard = async () => {
         <AddCourse user={mongoUser} />
 
         {/* Passing fetched courses to UserCourses */}
-        <UserCourses courses={userCourses} />
+        <UserCourses
+          courses={userCourses}
+          isNext={isNext}
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+        />
       </div>
     );
   } catch (error) {

@@ -25,7 +25,9 @@ const CourseLayout = ({ courses, courseId }) => {
 
   const sanitizeJsonResponse = (response) => {
     // Replace any unwanted characters, such as trailing commas, unescaped quotes, etc.
-    const cleanedResponse = response.replace(/,(\s*[}\]])/g, "$1"); // Removes trailing commas before closing brackets
+    const cleanedResponse = response
+      .replace(/,(?=\s*[}\]])/g, "") // Removes trailing commas
+      .replace(/\\u0000/g, ""); // Handles null characters
     return cleanedResponse;
   };
 

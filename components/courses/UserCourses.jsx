@@ -3,8 +3,10 @@ import React from "react";
 import CourseCard from "../cards/CourseCard";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import Pagination from "../shared/Pagination";
 
-const UserCourses = ({ courses }) => {
+const UserCourses = ({ courses, pageNumber, isNext }) => {
+  console.log(pageNumber, isNext);
   return (
     <div className="mt-6">
       <h2 className="text-dark200_light800 text-[21px] font-[500]">
@@ -39,6 +41,9 @@ const UserCourses = ({ courses }) => {
               ))}
         </div>
       )}
+      <div className="mt-10">
+        <Pagination pageNumber={pageNumber} isNext={isNext} />
+      </div>
     </div>
   );
 };
