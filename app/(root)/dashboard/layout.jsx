@@ -15,7 +15,7 @@ const DashboardLayout = async ({ children }) => {
   const mongoUser = await getUserById({ userId });
   const plainMongoUser = {
     ...mongoUser,
-    _id: mongoUser._id.toString(),
+    _id: mongoUser?._id?.toString(),
   };
 
   const { totalUserCourses } = await getUserCourses({

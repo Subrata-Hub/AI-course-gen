@@ -9,7 +9,6 @@ const Dashboard = async ({ searchParams }) => {
   try {
     // Fetch user authentication details
     const { userId } = auth();
-    console.log(userId);
 
     if (!userId) {
       throw new Error("User is not authenticated");

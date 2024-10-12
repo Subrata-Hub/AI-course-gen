@@ -4,7 +4,6 @@ import { getAllCourses } from "@/lib/actions/courses.action";
 import React from "react";
 
 const Explore = async ({ searchParams }) => {
-  // console.log(searchParams);
   const { courses, isNext } = await getAllCourses({
     page: searchParams?.page ? +searchParams.page : 1,
   });
@@ -17,16 +16,10 @@ const Explore = async ({ searchParams }) => {
         Explore more project build with AI by other users
       </p>
       <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
-        {courses.length > 0
-          ? courses.map((course, index) => (
-              <CourseCard course={course} displayUser={true} key={index} />
-            ))
-          : [1, 2, 3, 4, 5, 6].map((item, index) => (
-              <div
-                key={index}
-                className="mt-5 h-[250px] w-full animate-pulse rounded-lg bg-slate-300"
-              ></div>
-            ))}
+        {courses.length > 0 &&
+          courses.map((course, index) => (
+            <CourseCard course={course} displayUser={true} key={index} />
+          ))}
       </div>
       <div className="mt-10">
         <Pagination
@@ -39,3 +32,10 @@ const Explore = async ({ searchParams }) => {
 };
 
 export default Explore;
+
+// [1, 2, 3, 4, 5, 6].map((item, index) => (
+//   <div
+//     key={index}
+//     className="mt-5 h-[250px] w-full animate-pulse rounded-lg bg-slate-300"
+//   ></div>
+// )

@@ -6,7 +6,6 @@ import Link from "next/link";
 import Pagination from "../shared/Pagination";
 
 const UserCourses = ({ courses, pageNumber, isNext }) => {
-  console.log(pageNumber, isNext);
   return (
     <div className="mt-6">
       <h2 className="text-dark200_light800 text-[21px] font-[500]">
@@ -29,21 +28,18 @@ const UserCourses = ({ courses, pageNumber, isNext }) => {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {courses && courses.length > 0
-            ? courses.map((course, index) => (
-                <CourseCard course={course} key={index} />
-              ))
-            : [1, 2, 3, 4, 5, 6].map((item, index) => (
-                <div
-                  key={index}
-                  className="mt-5 h-[250px] w-full animate-pulse rounded-lg bg-slate-300"
-                ></div>
-              ))}
+          {courses &&
+            courses.length > 0 &&
+            courses.map((course, index) => (
+              <CourseCard course={course} key={index} />
+            ))}
         </div>
       )}
-      <div className="mt-10">
-        <Pagination pageNumber={pageNumber} isNext={isNext} />
-      </div>
+      {courses.length > 0 && (
+        <div className="mt-10">
+          <Pagination pageNumber={pageNumber} isNext={isNext} />
+        </div>
+      )}
     </div>
   );
 };
@@ -90,3 +86,10 @@ export default UserCourses;
 // };
 
 // export default UserCourses;
+
+// [1, 2, 3, 4, 5, 6].map((item, index) => (
+//   <div
+//     key={index}
+//     className="mt-5 h-[250px] w-full animate-pulse rounded-lg bg-slate-300"
+//   ></div>
+// ))
