@@ -8,7 +8,6 @@ const Page = async ({ params }) => {
 
   const courseData = await getCoursesById({ courseId });
 
-  console.log(courseData);
   return <CourseStart course={courseData} />;
 };
 

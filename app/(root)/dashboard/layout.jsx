@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "@/components/shared/Sidebar";
 import { getUserById, getUserCourses } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs/server";
-// import Navbar from "@/components/shared/navbar/Navbar";
+
 const DashboardLayout = async ({ children }) => {
   const { userId } = auth();
   console.log(userId);
@@ -28,7 +28,6 @@ const DashboardLayout = async ({ children }) => {
         <Sidebar totalUserCourses={totalUserCourses} />
       </div>
       <div className="md:ml-[266px]">
-        {/* <Navbar /> */}
         <div className="pt-10">{children}</div>
       </div>
     </div>

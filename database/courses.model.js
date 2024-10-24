@@ -9,6 +9,7 @@ const CoursesSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User" },
   courseBanner: { type: String, default: "/placeholder.png" },
   publish: { type: Boolean, default: false },
+  newchapters: [{ type: Schema.Types.ObjectId, ref: "Chapters", default: [] }],
 });
 
 const Courses = models.Courses || model("Courses", CoursesSchema);

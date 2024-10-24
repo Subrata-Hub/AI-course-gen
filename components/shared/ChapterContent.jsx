@@ -3,7 +3,7 @@ import ReactPlayer from "react-player/youtube";
 import ReactMarkdown from "react-markdown";
 const ChapterContent = ({ chapter, content }) => {
   return (
-    <div className="p-8">
+    <div className="p-6">
       <h2 className=" h2-semibold text-dark200_light900">
         {chapter?.chapter_name}
       </h2>

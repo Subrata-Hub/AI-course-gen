@@ -31,7 +31,7 @@ const Sidebar = ({ totalUserCourses }) => {
           </Link>
         ))}
       </ul>
-      <div className="absolute bottom-5 w-4/5">
+      <div className=" w-4/5">
         <ProgressBar
           value={(totalUserCourses / 20) * 100}
           color="primary-gradient"
@@ -50,3 +50,5 @@ const Sidebar = ({ totalUserCourses }) => {
 };
 
 export default Sidebar;
+
+// absolute bottom-5
